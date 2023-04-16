@@ -1,5 +1,5 @@
 // Common closure function to store the selected file in memory.
-const selectedFileHandler = () => {
+const selectedFileStore = () => {
 	let selectedFilePath = "";
 	return {
 		set: (path) => (selectedFilePath = path),
@@ -7,4 +7,4 @@ const selectedFileHandler = () => {
 	};
 };
 
-module.exports = selectedFileHandler();
+module.exports = selectedFileStore();
