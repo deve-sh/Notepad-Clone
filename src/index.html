@@ -86,6 +86,7 @@
 			};
 			rootTextarea.oninput = () => {
 				if (!hasUnsavedChanges) {
+					// Notify the container app that there is an unsaved change.
 					window.electron.setHasUnsavedChanges(true);
 					hasUnsavedChanges = true;
 					document.title = "*" + document.title;

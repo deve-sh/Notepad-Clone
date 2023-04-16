@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-exports.saveFile = (path, contents) => {
+exports.saveContentsToFile = (path, contents) => {
 	if (!path) return;
 	fs.writeFileSync(path, contents);
 };
