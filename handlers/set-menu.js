@@ -1,4 +1,5 @@
 const { Menu, ipcRenderer } = require("electron");
+const isDev = require("../utils/is-dev");
 
 const isMac = process.platform === "darwin";
 
@@ -36,7 +37,15 @@ const menuTemplate = [
 		],
 	},
 	{ role: "editMenu" },
-	{ role: "windowMenu", label: "View" },
+	{
+		role: "windowMenu",
+		label: "View",
+		submenu: [
+			{ role: "minimize" },
+			{ role: "zoom" },
+			isDev ? { role: "toggleDevTools" } : { role: "close" },
+		],
+	},
 ];
 
 const setMenu = () => {
