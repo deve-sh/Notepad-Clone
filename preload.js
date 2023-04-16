@@ -5,8 +5,8 @@ contextBridge.exposeInMainWorld("electron", {
 	isWindows,
 	isLinux,
 	isMac,
-	setHasUnsavedChanges: () => {
-		ipcRenderer.send("set-unsaved-changes");
+	setHasUnsavedChanges: (hasUnsavedChanges = true) => {
+		ipcRenderer.send("set-unsaved-changes", hasUnsavedChanges);
 	},
 });
 

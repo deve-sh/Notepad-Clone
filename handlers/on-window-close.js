@@ -42,10 +42,6 @@ const mountWindowCloseEvent = (mainWindow) => {
 	ipcMain.on("set-unsaved-changes", (_event, hasUnsavedChanges) => {
 		unsavedChangesStore.set(hasUnsavedChanges);
 	});
-
-	return () => {
-		mainWindow.off("close", onWindowClose);
-	};
 };
 
 module.exports = mountWindowCloseEvent;
