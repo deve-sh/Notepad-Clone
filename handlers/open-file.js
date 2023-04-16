@@ -8,12 +8,12 @@ const unsavedChangesStore = require("../stores/unsaved-changes.store");
 
 const openFile = () => {
 	const mainWindow = mainWindowStore.get();
-	const [selectedPath] = dialog.showOpenDialogSync(mainWindow);
+	const selectedPaths = dialog.showOpenDialogSync(mainWindow);
 
-	if (selectedPath) {
+	if (selectedPaths && selectedPaths.length) {
 		unsavedChangesStore.set(false);
-		selectedFilePathStore.set(selectedPath);
-		signalUpdatedFileContents(readFile(selectedPath));
+		selectedFilePathStore.set(selectedPaths[0]);
+		signalUpdatedFileContents(readFile(selectedPaths[0]));
 		mainWindow.webContents.send("save-complete");
 	}
 };
