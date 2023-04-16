@@ -18,7 +18,9 @@ const mountWindowCloseEvent = (mainWindow) => {
 
 		if (choice === 0) {
 			event.preventDefault();
+			// Ask for contents from the web window.
 			mainWindow.webContents.send("get-entered-contents");
+			// Get contents back as response asynchronously
 			ipcMain.on("receive-entered-contents", async (_event, contents) => {
 				// We have the contents for the file entered by the user.
 				// Open a save dialog
@@ -30,7 +32,6 @@ const mountWindowCloseEvent = (mainWindow) => {
 					const selectedPath = dialog.showSaveDialogSync(mainWindow);
 					saveContentsToFile(selectedPath, contents);
 				}
-
 				// Now done, close the window.
 				mainWindow.close();
 			});
