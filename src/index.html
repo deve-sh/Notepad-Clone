@@ -69,7 +69,8 @@
 					: ""
 			} (CRLF)`;
 
-			let hasUnsavedChanges = false;
+			window.hasUnsavedChanges = false;
+
 			const rootTextarea = document.getElementById("root");
 			const setCursorLocation = () => {
 				const cursorPointer = rootTextarea.selectionStart;
@@ -85,10 +86,10 @@
 				lineAndColumnMarker.innerHTML = `Ln ${lineNumber}, Col ${columnNumber}`;
 			};
 			rootTextarea.oninput = () => {
-				if (!hasUnsavedChanges) {
+				if (!window.hasUnsavedChanges) {
 					// Notify the container app that there is an unsaved change.
 					window.electron.setHasUnsavedChanges(true);
-					hasUnsavedChanges = true;
+					window.hasUnsavedChanges = true;
 					document.title = "*" + document.title;
 					// window.electron.updateTitle("*" + document.title);
 				}

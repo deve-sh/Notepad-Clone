@@ -1,8 +1,11 @@
 const { Menu, ipcRenderer } = require("electron");
 const isDev = require("../utils/is-dev");
 
+const resetEverything = require("./reset-everything");
+const openFile = require("./open-file");
 const onFileSave = require("./save-file");
 const onFileSaveAs = require("./save-file-as");
+const printPage = require("./print-page");
 
 const isMac = process.platform === "darwin";
 
@@ -11,10 +14,14 @@ const menuTemplate = [
 		label: "File",
 		submenu: [
 			{
+				label: "New",
+				click: resetEverything,
+				accelerator: "CommandOrControl+N",
+			},
+			{
 				label: "Open...",
-				click: () => {
-					ipcRenderer.send("open-file");
-				},
+				click: openFile,
+				accelerator: "CommandOrControl+O",
 			},
 			{
 				label: "Save",
@@ -29,9 +36,8 @@ const menuTemplate = [
 			{ type: "separator" },
 			{
 				label: "Print",
-				click: () => {
-					ipcRenderer.send("print-file");
-				},
+				accelerator: "CommandOrControl+P",
+				click: printPage,
 			},
 			{ type: "separator" },
 			isMac ? { role: "close" } : { role: "quit" },

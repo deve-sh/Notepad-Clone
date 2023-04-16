@@ -15,9 +15,10 @@ const onFileSaveAs = () => {
 		const selectedPath = dialog.showSaveDialogSync(mainWindow);
 		if (selectedPath) {
 			selectedFilePathStore.set(selectedPath);
+			ipcRenderer.send("selected-file-change", selectedPath);
 			unsavedChangesStore.set(false);
 			saveContentsToFile(selectedPath, contents);
-			// Send the updated file name to the web view
+			mainWindow.webContents.send("save-complete");
 		}
 		ipcMain.off("receive-entered-contents", onReceiveFileContents);
 	};

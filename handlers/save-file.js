@@ -1,4 +1,4 @@
-const { ipcMain, dialog } = require("electron");
+const { ipcMain, dialog, ipcRenderer } = require("electron");
 
 const selectedFilePathStore = require("../stores/selected-file-path.store");
 const mainWindowStore = require("../stores/main-window.store");
@@ -20,9 +20,10 @@ const onFileSave = () => {
 			const selectedPath = dialog.showSaveDialogSync(mainWindow);
 			if (selectedPath) {
 				selectedFilePathStore.set(selectedPath);
+				ipcRenderer.send("selected-file-change", selectedPath);
 				unsavedChangesStore.set(false);
 				saveContentsToFile(selectedPath, contents);
-				// Send the updated file name to the web view
+				mainWindow.webContents.send("save-complete");
 			}
 		}
 
