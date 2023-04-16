@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Notepad - Untitled Document</title>
+		<title>Untitled - Notepad</title>
 		<style type="text/css">
 			* {
 				box-sizing: border-box;
@@ -69,6 +69,7 @@
 					: ""
 			} (CRLF)`;
 
+			let hasUnsavedChanges = false;
 			const rootTextarea = document.getElementById("root");
 			const setCursorLocation = () => {
 				const cursorPointer = rootTextarea.selectionStart;
@@ -81,10 +82,16 @@
 				const lineAndColumnMarker = document.getElementById(
 					"line-and-column-marker"
 				);
-				console.log(lineAndColumnMarker, lineNumber, columnNumber);
 				lineAndColumnMarker.innerHTML = `Ln ${lineNumber}, Col ${columnNumber}`;
 			};
-			rootTextarea.oninput = setCursorLocation;
+			rootTextarea.oninput = () => {
+				if (!hasUnsavedChanges) {
+					hasUnsavedChanges = true;
+					document.title = "*" + document.title;
+					// window.electron.updateTitle("*" + document.title);
+				}
+				setCursorLocation();
+			};
 			setCursorLocation();
 		</script>
 	</body>
