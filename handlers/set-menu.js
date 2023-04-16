@@ -1,16 +1,46 @@
-const { Menu } = require("electron");
+const { Menu, ipcRenderer } = require("electron");
+
+const isMac = process.platform === "darwin";
+
+const menuTemplate = [
+	{
+		label: "File",
+		submenu: [
+			{
+				label: "Open...",
+				click: () => {
+					ipcRenderer.send("open-file");
+				},
+			},
+			{
+				label: "Save",
+				click: () => {
+					ipcRenderer.send("save-file");
+				},
+			},
+			{
+				label: "Save As",
+				click: () => {
+					ipcRenderer.send("save-file-as");
+				},
+			},
+			{ type: "separator" },
+			{
+				label: "Print",
+				click: () => {
+					ipcRenderer.send("print-file");
+				},
+			},
+			{ type: "separator" },
+			isMac ? { role: "close" } : { role: "quit" },
+		],
+	},
+	{ role: "editMenu" },
+	{ role: "windowMenu", label: "View" },
+];
 
 const setMenu = () => {
-	const defaultMenu = Menu.getApplicationMenu();
-	const newMenu = new Menu();
-	for (let item of defaultMenu.items) {
-		if (item.label === "View") continue;
-		if (item.label === "Window") {
-			item.label = "View";
-			item.role = "viewmenu";
-		}
-		newMenu.append(item);
-	}
+	const newMenu = Menu.buildFromTemplate(menuTemplate);
 	return Menu.setApplicationMenu(newMenu);
 };
 
