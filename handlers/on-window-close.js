@@ -3,8 +3,10 @@ const { saveContentsToFile } = require("./file-ops");
 
 const selectedFilePathHandler = require("../stores/selected-file-path.store");
 const unsavedChangesStore = require("../stores/unsaved-changes.store");
+const mainWindowStore = require("../stores/main-window.store");
 
-const mountWindowCloseEvent = (mainWindow) => {
+const mountWindowCloseEvent = () => {
+	const mainWindow = mainWindowStore.get();
 	const onWindowClose = (event) => {
 		const userHasUnsavedChanges = unsavedChangesStore.get();
 		if (!userHasUnsavedChanges) return;
@@ -23,12 +25,12 @@ const mountWindowCloseEvent = (mainWindow) => {
 			// Get contents back as response asynchronously
 			ipcMain.on("receive-entered-contents", async (_event, contents) => {
 				// We have the contents for the file entered by the user.
-				// Open a save dialog
 				const selectedFilePath = selectedFilePathHandler.get();
 				if (selectedFilePath) {
 					// Store the contents to an existing file.
 					saveContentsToFile(selectedFilePath, contents);
 				} else {
+					// Open a save dialog
 					const selectedPath = dialog.showSaveDialogSync(mainWindow);
 					saveContentsToFile(selectedPath, contents);
 				}

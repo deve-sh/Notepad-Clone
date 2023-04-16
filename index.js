@@ -4,6 +4,8 @@ const path = require("path");
 const setMenu = require("./handlers/set-menu");
 const onWindowClose = require("./handlers/on-window-close");
 
+const mainWindowStore = require("./stores/main-window.store");
+
 const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		width: 1200,
@@ -15,6 +17,7 @@ const createWindow = () => {
 	});
 	nativeTheme.themeSource = "light";
 	mainWindow.loadURL(path.resolve(__dirname, "./src/index.html"));
+	mainWindowStore.set(mainWindow);
 
 	setMenu();
 	onWindowClose(mainWindow);
