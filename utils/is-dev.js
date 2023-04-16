@@ -1,2 +1,3 @@
-const isDev = process.env.ELECTRON_IS_DEV;
+const { app } = require("electron");
+const isDev = !app.isPackaged;
 module.exports = isDev;
