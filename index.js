@@ -8,8 +8,8 @@ const mainWindowStore = require("./stores/main-window.store");
 
 const createWindow = () => {
 	const mainWindow = new BrowserWindow({
-		width: 1200,
-		height: 800,
+		width: 800,
+		height: 500,
 		webPreferences: {
 			nodeIntegration: true,
 			preload: path.resolve(__dirname, "./preload.js"),
