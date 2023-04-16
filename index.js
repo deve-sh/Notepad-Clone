@@ -1,8 +1,10 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, nativeTheme } = require("electron");
 const path = require("path");
 
+const setMenu = require("./handlers/set-menu");
+
 const createWindow = () => {
-	const win = new BrowserWindow({
+	const mainWindow = new BrowserWindow({
 		width: 1200,
 		height: 800,
 		webPreferences: {
@@ -10,7 +12,9 @@ const createWindow = () => {
 			preload: path.resolve(__dirname, "./preload.js"),
 		},
 	});
-	win.loadURL(path.resolve(__dirname, "./src/index.html"));
+	nativeTheme.themeSource = "light";
+	mainWindow.loadURL(path.resolve(__dirname, "./src/index.html"));
+	setMenu();
 };
 
 // This method will be called when Electron has finished
