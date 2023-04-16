@@ -96,6 +96,14 @@
 				setCursorLocation();
 			};
 			setCursorLocation();
+
+			// Listen for tab keypress
+			rootTextarea.addEventListener("keydown", (event) => {
+				if (event.key == "Tab") {
+					event.preventDefault();
+					document.execCommand("insertText", false, "\t");
+				}
+			});
 		</script>
 	</body>
 </html>
