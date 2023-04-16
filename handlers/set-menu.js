@@ -1,6 +1,9 @@
 const { Menu, ipcRenderer } = require("electron");
 const isDev = require("../utils/is-dev");
 
+const onFileSave = require("./save-file");
+const onFileSaveAs = require("./save-file-as");
+
 const isMac = process.platform === "darwin";
 
 const menuTemplate = [
@@ -15,15 +18,13 @@ const menuTemplate = [
 			},
 			{
 				label: "Save",
-				click: () => {
-					ipcRenderer.send("save-file");
-				},
+				accelerator: "CommandOrControl+S",
+				click: onFileSave,
 			},
 			{
 				label: "Save As",
-				click: () => {
-					ipcRenderer.send("save-file-as");
-				},
+				accelerator: "CommandOrControl+Shift+S",
+				click: onFileSaveAs,
 			},
 			{ type: "separator" },
 			{
