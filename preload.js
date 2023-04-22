@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
-const { isWindows, isMac, isLinux } = require("./detect-os");
+const { isWindows, isMac, isLinux } = require("./utils/detect-os");
 
 contextBridge.exposeInMainWorld("electron", {
 	isWindows,
